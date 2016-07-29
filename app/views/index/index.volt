@@ -4,44 +4,39 @@
 {% block content %}
 
     <div class="jumbotron">
-        <div class="container">
-            <h2>Список</h2>
+        <div class="form-container container hidden">
+            <h2>Форма Добавления</h2>
+            {{ form('', "class":"form-form") }}
 
-            {% for result in page.items %}
-                {% if loop.first %}
-                    <table class="table table-bordered">
-                    <tr>
-                        <th>Имя</th>
-                        <th>Телефон</th>
-                        <th>Емейл</th>
-                        <th>Сообщение</th>
-                        <th>Дата</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td>{{ result.name }}</td>
-                    <td>{{ result.phone }}</td>
-                    <td>{{ result.email }}</td>
-                    <td>{{ result.message }}</td>
-                    <td>{{ result.date }}</td>
-                    <td>{{ link_to("form/edit/" ~ result.id, "Редактировать", "class":'button') }}</td>
-                    <td>{{ link_to("form/delete/" ~ result.id, "Удалить", "class":'button') }}</td>
-                </tr>
-                {% if loop.last %}
-                    </table>
-                {% endif %}
-            {% endfor %}
-            <div class="button-h">
-                {{ link_to("index/index/", "Первая", "class":'button') }}
-                {{ link_to("index/index?page=" ~ page.before, "Предыдущая", "class":'button') }}
-                {{ link_to("index/index/?page=" ~ page.next, "Следующая", "class":'button') }}
-                {{ link_to("index/index/?page=" ~ page.last, "Последняя", "class":'button') }}
-            </div>
+            {{ text_field("id", "class":"hidden") }}
+            <label for="title">Имя</label></br>
+            {{ text_field("name", "size": 32) }}</br>
+
+            <label for="title">Телефон</label></br>
+            {{ text_field("phone", "size": 32) }}</br>
+
+            <label for="title">Емейл</label></br>
+            {{ text_field("email", "size": 32) }}</br>
+
+            <label for="title">Сообщение</label></br>
+            {{ text_area("message", "size": 32, "cols": 34, "rows": 4)}}</br>
+
+
+            <a class="btn submit-button">ok</a>
+            <a class="btn cancel-button">cancel</a>
+
+            {{ end_form() }}
+        </div>
+        <div class="container">
+            <button class="btn add-button">add</button>
+        </div>
+        <div class="table-container container">
+            Loading...
+        </div>
+        <div>
+            <button class="nextPage-button btn">Next Page</button>
         </div>
     </div>
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
 {% endblock %}

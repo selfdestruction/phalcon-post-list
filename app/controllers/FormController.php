@@ -8,6 +8,9 @@ class FormController extends  BaseController
     }
 
     public function addAction(){
+
+        $this->flash->success("The post was correctly saved!");
+
         if($this->request->isPost()){
             $post = new Post();
             $post->name = $this->request->getPost('name');
@@ -16,15 +19,17 @@ class FormController extends  BaseController
             $post->message = $this->request->getPost('message');
 
             if (!$post->create()) {
+                $message = '';
                 foreach ($post->getMessages() as $m) {
+
                     $message .= $m."</br>";
                 }
-                $this->flash->error($message);
+                 echo $this->flash->error($message);
             } else {
-                $this->flash->success("Post was updated successfully");
+                $this->flash->success("Post was added successfully");
             }
 
-            return $this->response->redirect("index/index");
+            return $this->response->redirect("index");
 
         }
     }

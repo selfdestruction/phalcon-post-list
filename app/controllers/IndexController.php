@@ -5,12 +5,8 @@ class IndexController extends  BaseController
 
     public function indexAction(){
 
-
-
-
-
-        echo "Boobs";
-
+    }
+    public function listAction(){
 
 //        $post = new Post();
 
@@ -19,27 +15,43 @@ class IndexController extends  BaseController
 //        $post->phone = '123456789012';
 //        $post->message = 'some message';
 //        $post->save();
-
-        $data = Post::find([
-            "order" => "date DESC"
+        $offset = ($this->request->getQuery("offset")) ? $this->request->getQuery("offset") : 0 ;
+        $rows = Post::find([
+            "order" => "id ASC",
+            "limit" => 10,
+            "offset" => $offset
         ]);
 //        echo "<pre>";
 //        print_r($data->toArray());
 
         $currentPage = 1;
-        $currentPage = $this->request->getQuery("page");
+//        $currentPage = $this->request->getQuery("page");
+//
+//
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data"  => $data,
+//                "limit" => 10,
+//                "page"  => $currentPage
+//            )
+//        );
+//        $page = $paginator->getPaginate();
+//
+//        $this->view->page = $page;
+        $data['result'] = $rows->toArray();
 
+        $data['colums'][] = ['name'=> 'name', 'descr' => 'Имя'];
+        $data['colums'][] = ['name'=> 'email', 'descr' => 'Емейл'];
+        $data['colums'][] = ['name'=> 'phone', 'descr' => 'Телефон'];
+        $data['colums'][] = ['name'=> 'message', 'descr' => 'Сообщение'];
+        $data['colums'][] = ['name'=> 'date', 'descr' => 'Дата'];
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data"  => $data,
-                "limit" => 10,
-                "page"  => $currentPage
-            )
-        );
-        $page = $paginator->getPaginate();
+//        echo "<pre>";
+//        print_r($data);
+//        echo "</pre>";
 
-        $this->view->page = $page;
+        $this->view->disable();
+        echo json_encode($data);
     }
 }
 

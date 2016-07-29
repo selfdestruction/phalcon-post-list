@@ -34,7 +34,7 @@ try {
     });
 
     $di->set('flash', function () {
-        $flash = new Phalcon\Flash\Session(
+        $flash = new Phalcon\Flash\Direct(
             array(
                 'error'   => 'alert alert-danger',
                 'success' => 'alert alert-success',
@@ -42,7 +42,7 @@ try {
                 'warning' => 'alert alert-warning'
             )
         );
-
+        $flash->setImplicitFlush(true);
         return $flash;
     });
 
