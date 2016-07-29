@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{ this.assets.outputCss('style') }}
+    {{ this.assets.outputJs('js') }}
 </head>
 <body>
 <div class="navbar navbar-default">

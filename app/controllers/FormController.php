@@ -15,17 +15,17 @@ class FormController extends  BaseController
             $post->phone = $this->request->getPost('phone');
             $post->message = $this->request->getPost('message');
 
-            if (!$post->update()) {
+            if (!$post->create()) {
                 foreach ($post->getMessages() as $m) {
                     $message .= $m."</br>";
                 }
                 $this->flash->error($message);
             } else {
                 $this->flash->success("Post was updated successfully");
-
             }
 
             return $this->response->redirect("index/index");
+
         }
     }
 

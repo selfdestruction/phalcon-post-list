@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <h2>Форма редактирования сообщения</h2>
+        <h2>Форма Добавления</h2>
         {{ form('form/add/', 'method': 'post') }}
 
 
@@ -24,3 +24,5 @@
         {{ end_form() }}
     </div>
 {% endblock %}
+
+
