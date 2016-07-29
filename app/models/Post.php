@@ -15,14 +15,5 @@ class Post extends Model
     public function beforeCreate(){
 
         $this->date = date('Y-m-d H:i:s');
-
-       if ($this->name == 'Peter') {
-            $text = "A task cannot be named Peter";
-            $field = "title";
-            $type = "InvalidValue";
-            $message = new Message($text, $field, $type);
-            $this->appendMessage($message);
-            return false;
-       }
     }
 }

@@ -22,8 +22,8 @@
             {{ text_area("message", "size": 32, "cols": 34, "rows": 4)}}</br>
 
 
-            <a class="btn submit-button">ok</a>
-            <a class="btn cancel-button">cancel</a>
+            <button type="submit" class="btn submit-button">ok</button>
+            <button class="btn cancel-button">cancel</button>
 
             {{ end_form() }}
         </div>

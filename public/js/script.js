@@ -38,33 +38,65 @@ $(function() {
     // submit
     $(".form-form").validate({
         submitHandler: function (form){
-            console.log('submit');
+            console.log($(form).serialize());
+            // Rx.Observable.fromPromise(jQuery.getJSON(requestUrl))
             // или отправка через ajax
-            //$.post(form.action, $(form).serialize(), function (result, xhr){
-            //    // форма отправлена успешно
-            //});
+            $.post('http://localhost/phalcon-post-list/form/add', $(form).serialize(), function (result, xhr){
+                if(xhr === 'success'){
+                    // evil begin
+                    $('.table-container #post-list tr').eq(1).before(result);
+                    $('.table-container #post-list tr:last').remove();
+                    // evil end
+                }
+            console.log(result);
+            // console.log(xhr);
+            });
         },
         rules: {
             name: {
                 required: true,
-                minlength: 2
+                minlength: 4
+            },
+            phone: {
+                required: true,
+                minlength: 12
+            },
+            email: {
+                required: true
+                // minlength: 5
+            },
+            message: {
+                required: true,
+                maxlength: 200
             }
         },
         messages: {
             name: {
-                required: "Please enter a username",
-                minlength: "Your username must consist of at least 2 characters"
+                required: "Пожалуйста введите имя",
+                minlength: "Имя должно быть не короче 4 символов"
+            },
+            phone: {
+                required: "Пожалуйста введите номер телефона",
+                minlength: " Пожалуйста введите коректный номер телефона"
+            },
+            email: {
+                required: "Пожалуйста введите емейл"
+                // minlength: ""
+            },
+            message: {
+                required: "Пожалуйста введите сообщение",
+                maxlength: "Сообщение должно быть не длиннее 200 символов"
             }
         }
 
         /* опции валидации */
     });
-    let submitButton = $('.submit-button');
-    submitButtonStream = Rx.Observable.fromEvent(submitButton, 'click');
-    submitButtonStream.subscribe( c => {
-        $('.form-container').addClass('hidden');
-        addButton.removeClass('hidden');
-    });
+    // let submitButton = $('.submit-button');
+    // submitButtonStream = Rx.Observable.fromEvent(submitButton, 'click');
+    // submitButtonStream.subscribe( c => {
+    //     $('.form-container').addClass('hidden');
+    //     addButton.removeClass('hidden');
+    // });
 
     // cancel
     let cancelButton = $('.cancel-button');

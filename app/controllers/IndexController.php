@@ -21,10 +21,9 @@ class IndexController extends  BaseController
             "limit" => 10,
             "offset" => $offset
         ]);
-//        echo "<pre>";
-//        print_r($data->toArray());
+       // echo "<pre>";
 
-        $currentPage = 1;
+        // $currentPage = 1;
 //        $currentPage = $this->request->getQuery("page");
 //
 //
@@ -39,6 +38,7 @@ class IndexController extends  BaseController
 //
 //        $this->view->page = $page;
         $data['result'] = $rows->toArray();
+       // print_r($data);
 
         $data['colums'][] = ['name'=> 'name', 'descr' => 'Имя'];
         $data['colums'][] = ['name'=> 'email', 'descr' => 'Емейл'];

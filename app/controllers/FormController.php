@@ -8,30 +8,39 @@ class FormController extends  BaseController
     }
 
     public function addAction(){
-
-        $this->flash->success("The post was correctly saved!");
-
         if($this->request->isPost()){
             $post = new Post();
             $post->name = $this->request->getPost('name');
             $post->email = $this->request->getPost('email');
-            $post->phone = $this->request->getPost('phone');
+            $post->phone = $this->request->getPost('phone');//$_POST['phone'];
             $post->message = $this->request->getPost('message');
 
-            if (!$post->create()) {
-                $message = '';
-                foreach ($post->getMessages() as $m) {
-
-                    $message .= $m."</br>";
+            $post->create();
+            // evil begin
+            $row = '<tr>';
+            foreach ($post->toArray() as $key => $value) {
+                if($key == 'id'){
+                    continue;
                 }
-                 echo $this->flash->error($message);
-            } else {
-                $this->flash->success("Post was added successfully");
-            }
+                $row .= '<td>'.$value.'</td>';
+            };
+            $row .= '</tr>';
+            echo $row;
+            // evil end
 
-            return $this->response->redirect("index");
 
+            // if (!$post->create()) {
+            //     $message = '';
+            //     foreach ($post->getMessages() as $m) {
+
+            //         $message .= $m."</br>";
+            //     }
+            //     // $this->flash->error($message);
+            // } else {
+            //     // $this->flash->success("Post was added successfully");
+            // }
         }
+        $this->view->disable();
     }
 
     public function editAction($id){
