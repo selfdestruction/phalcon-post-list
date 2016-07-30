@@ -17,7 +17,7 @@ class IndexController extends  BaseController
 //        $post->save();
         $offset = ($this->request->getQuery("offset")) ? $this->request->getQuery("offset") : 0 ;
         $rows = Post::find([
-            "order" => "id ASC",
+            "order" => "date DESC",
             "limit" => 10,
             "offset" => $offset
         ]);

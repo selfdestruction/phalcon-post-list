@@ -19,6 +19,7 @@ class BaseController extends \Phalcon\Mvc\Controller
             ->addJs("third-party/js/jquery.min.js", false)
             ->addJs("third-party/js/rx.all.min.js", false)
             ->addJs("third-party/js/jquery.validate.js", false)
+            ->addJs("third-party/js/jquery.mask.min.js", false)
 //            ->addJs("//code.highcharts.com/highcharts.js", false)
 //            ->addJs("//code.highcharts.com/modules/data.js", false)
 //            ->addJs("//code.highcharts.com/modules/drilldown.js", false)

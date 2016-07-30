@@ -17,15 +17,8 @@ class FormController extends  BaseController
 
             $post->create();
             // evil begin
-            $row = '<tr>';
-            foreach ($post->toArray() as $key => $value) {
-                if($key == 'id'){
-                    continue;
-                }
-                $row .= '<td>'.$value.'</td>';
-            };
-            $row .= '</tr>';
-            echo $row;
+            $ar = $post->toArray();
+            echo '<tr><td>'.$ar['name'].'</td><td>'.$ar['email'].'</td><td>'.$ar['phone'].'</td><td>'.$ar['message'].'</td><td>'.$ar['date'].'</td></tr>';
             // evil end
 
 

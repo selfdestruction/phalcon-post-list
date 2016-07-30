@@ -23,7 +23,7 @@
 
 
             <button type="submit" class="btn submit-button">ok</button>
-            <button class="btn cancel-button">cancel</button>
+            <input type="button" class="btn cancel-button" value="cancel"/>
 
             {{ end_form() }}
         </div>

@@ -35,7 +35,7 @@ $(function() {
         addButton.addClass('hidden');
     });
 
-    // submit
+    // submit, validate
     $(".form-form").validate({
         submitHandler: function (form){
             console.log($(form).serialize());
@@ -48,8 +48,6 @@ $(function() {
                     $('.table-container #post-list tr:last').remove();
                     // evil end
                 }
-            console.log(result);
-            // console.log(xhr);
             });
         },
         rules: {
@@ -59,10 +57,11 @@ $(function() {
             },
             phone: {
                 required: true,
-                minlength: 12
+                minlength: 17
             },
             email: {
-                required: true
+                required: true,
+                email: true
                 // minlength: 5
             },
             message: {
@@ -80,7 +79,8 @@ $(function() {
                 minlength: " Пожалуйста введите коректный номер телефона"
             },
             email: {
-                required: "Пожалуйста введите емейл"
+                required: "Пожалуйста введите емейл",
+                email: "Пожалуйста введите коректный емейл"
                 // minlength: ""
             },
             message: {
@@ -88,9 +88,8 @@ $(function() {
                 maxlength: "Сообщение должно быть не длиннее 200 символов"
             }
         }
-
-        /* опции валидации */
     });
+    $("#phone").mask('+38(099)999-99-99');
     // let submitButton = $('.submit-button');
     // submitButtonStream = Rx.Observable.fromEvent(submitButton, 'click');
     // submitButtonStream.subscribe( c => {
