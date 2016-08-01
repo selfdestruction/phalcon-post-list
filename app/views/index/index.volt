@@ -33,8 +33,10 @@
         <div class="table-container container">
             Loading...
         </div>
-        <div>
-            <button class="nextPage-button btn">Next Page</button>
+        <div class="container">
+            <button data-offset="0" class="prevPage-button btn hidden">Prev Page</button>
+            <button data-offset="0" class="firstPage-button btn hidden">First Page</button>
+            <button data-offset="0" class="nextPage-button btn hidden">Next Page</button>
         </div>
     </div>
 

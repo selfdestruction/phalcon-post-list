@@ -8,31 +8,41 @@ class FormController extends  BaseController
     }
 
     public function addAction(){
+
         if($this->request->isPost()){
             $post = new Post();
+
             $post->name = $this->request->getPost('name');
             $post->email = $this->request->getPost('email');
             $post->phone = $this->request->getPost('phone');//$_POST['phone'];
             $post->message = $this->request->getPost('message');
 
             $post->create();
-            // evil begin
-            $ar = $post->toArray();
-            echo '<tr><td>'.$ar['name'].'</td><td>'.$ar['email'].'</td><td>'.$ar['phone'].'</td><td>'.$ar['message'].'</td><td>'.$ar['date'].'</td></tr>';
-            // evil end
 
+            $offset = ($this->request->getPost("offset")) ? $this->request->getPost("offset") : 0 ;
+            $limit = ($this->request->getPost("limit")) ? $this->request->getPost("limit") : 10 ;
 
-            // if (!$post->create()) {
-            //     $message = '';
-            //     foreach ($post->getMessages() as $m) {
+            $filterField = ($this->request->getPost("filterField")) ? $this->request->getPost("filterField") : 'date' ;
+            $filterOrder = ($this->request->getPost("filterOrder")) ? $this->request->getPost("filterOrder") : 'DESC' ;
 
-            //         $message .= $m."</br>";
-            //     }
-            //     // $this->flash->error($message);
-            // } else {
-            //     // $this->flash->success("Post was added successfully");
-            // }
+            $rows = Post::find([
+                "order" => $filterField.' '.$filterOrder,
+                "limit" => $limit,
+                "offset" => $offset
+            ]);
+
+            $data['result'] = $rows->toArray();
+
+            $data['colums'][] = ['name'=> 'name', 'descr' => 'Имя'];
+            $data['colums'][] = ['name'=> 'email', 'descr' => 'Емейл'];
+            $data['colums'][] = ['name'=> 'phone', 'descr' => 'Телефон'];
+            $data['colums'][] = ['name'=> 'message', 'descr' => 'Сообщение'];
+            $data['colums'][] = ['name'=> 'date', 'descr' => 'Дата'];
+            $data['count'] = Post::count();
+
+            echo json_encode($data);
         }
+
         $this->view->disable();
     }
 
@@ -40,34 +50,68 @@ class FormController extends  BaseController
 
         $post = Post::findFirst($id);
 
-        if(!$post){
-            $this->flash->error("No match!");
-            return $this->response->redirect("index/index");
+        if($this->request->isPost()){
 
-        }else{
+            $post->name = $this->request->getPost('name');
+            $post->email = $this->request->getPost('email');
+            $post->phone = $this->request->getPost('phone');//$_POST['phone'];
+            $post->message = $this->request->getPost('message');
 
-            $this->view->post = $post;
+            $post->update();
 
+            $offset = ($this->request->getPost("offset")) ? $this->request->getPost("offset") : 0 ;
+            $limit = ($this->request->getPost("limit")) ? $this->request->getPost("limit") : 10 ;
 
-            if($this->request->isPost()){
+            $filterField = ($this->request->getPost("filterField")) ? $this->request->getPost("filterField") : 'date' ;
+            $filterOrder = ($this->request->getPost("filterOrder")) ? $this->request->getPost("filterOrder") : 'DESC' ;
 
-                $post->name = $this->request->getPost('name');
-                $post->email = $this->request->getPost('email');
-                $post->phone = $this->request->getPost('phone');
-                $post->message = $this->request->getPost('message');
+            $rows = Post::find([
+                "order" => $filterField.' '.$filterOrder,
+                "limit" => $limit,
+                "offset" => $offset
+            ]);
 
-                if (!$post->update()) {
-                    foreach ($post->getMessages() as $m) {
-                        $message .= $m."</br>";
-                    }
-                    $this->flash->error($message);
-                } else {
-                    $this->flash->success("Post was updated successfully");
+            $data['result'] = $rows->toArray();
 
-                }
+            $data['colums'][] = ['name'=> 'name', 'descr' => 'Имя'];
+            $data['colums'][] = ['name'=> 'email', 'descr' => 'Емейл'];
+            $data['colums'][] = ['name'=> 'phone', 'descr' => 'Телефон'];
+            $data['colums'][] = ['name'=> 'message', 'descr' => 'Сообщение'];
+            $data['colums'][] = ['name'=> 'date', 'descr' => 'Дата'];
+            $data['count'] = Post::count();
 
-                return $this->response->redirect("index/index");
-            }
+            echo json_encode($data);
         }
+
+        $this->view->disable();
+    }
+
+    public function deleteAction($id){
+
+        $post = Post::findFirst($id);
+        $post->delete();
+
+        $offset = ($this->request->getPost("offset")) ? $this->request->getPost("offset") : 0 ;
+        $limit = ($this->request->getPost("limit")) ? $this->request->getPost("limit") : 10 ;
+
+        $filterField = ($this->request->getPost("filterField")) ? $this->request->getPost("filterField") : 'date' ;
+        $filterOrder = ($this->request->getPost("filterOrder")) ? $this->request->getPost("filterOrder") : 'DESC' ;
+
+        $rows = Post::find([
+            "order" => $filterField.' '.$filterOrder,
+            "limit" => $limit,
+            "offset" => $offset
+        ]);
+
+        $data['result'] = $rows->toArray();
+
+        $data['colums'][] = ['name'=> 'name', 'descr' => 'Имя'];
+        $data['colums'][] = ['name'=> 'email', 'descr' => 'Емейл'];
+        $data['colums'][] = ['name'=> 'phone', 'descr' => 'Телефон'];
+        $data['colums'][] = ['name'=> 'message', 'descr' => 'Сообщение'];
+        $data['colums'][] = ['name'=> 'date', 'descr' => 'Дата'];
+        $data['count'] = Post::count();
+
+        echo json_encode($data);
     }
 }

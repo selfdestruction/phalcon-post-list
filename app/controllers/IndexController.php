@@ -15,10 +15,16 @@ class IndexController extends  BaseController
 //        $post->phone = '123456789012';
 //        $post->message = 'some message';
 //        $post->save();
+        // echo Post::count();
         $offset = ($this->request->getQuery("offset")) ? $this->request->getQuery("offset") : 0 ;
+        $limit = ($this->request->getQuery("limit")) ? $this->request->getQuery("limit") : 10 ;
+
+        $filterField = ($this->request->getQuery("filterField")) ? $this->request->getQuery("filterField") : 'date' ;
+        $filterOrder = ($this->request->getQuery("filterOrder")) ? $this->request->getQuery("filterOrder") : 'DESC' ;
+
         $rows = Post::find([
-            "order" => "date DESC",
-            "limit" => 10,
+            "order" => $filterField.' '.$filterOrder,
+            "limit" => $limit,
             "offset" => $offset
         ]);
        // echo "<pre>";
@@ -45,6 +51,7 @@ class IndexController extends  BaseController
         $data['colums'][] = ['name'=> 'phone', 'descr' => 'Телефон'];
         $data['colums'][] = ['name'=> 'message', 'descr' => 'Сообщение'];
         $data['colums'][] = ['name'=> 'date', 'descr' => 'Дата'];
+        $data['count'] = Post::count();
 
 //        echo "<pre>";
 //        print_r($data);
