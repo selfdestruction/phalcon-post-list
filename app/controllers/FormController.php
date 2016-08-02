@@ -23,8 +23,8 @@ class FormController extends  BaseController
             $limit = ($this->request->getPost("limit")) ? $this->request->getPost("limit") : 10 ;
 
             $filterField = ($this->request->getPost("filterField")) ? $this->request->getPost("filterField") : 'date' ;
-            $filterOrder = ($this->request->getPost("filterOrder")) ? $this->request->getPost("filterOrder") : 'DESC' ;
-
+            $filterOrder = ($this->request->getPost("filterOrder") == 'false') ? 'ASC' : 'DESC' ;
+            // print_r($filterField.' '.$filterOrder);
             $rows = Post::find([
                 "order" => $filterField.' '.$filterOrder,
                 "limit" => $limit,
@@ -63,8 +63,7 @@ class FormController extends  BaseController
             $limit = ($this->request->getPost("limit")) ? $this->request->getPost("limit") : 10 ;
 
             $filterField = ($this->request->getPost("filterField")) ? $this->request->getPost("filterField") : 'date' ;
-            $filterOrder = ($this->request->getPost("filterOrder")) ? $this->request->getPost("filterOrder") : 'DESC' ;
-
+            $filterOrder = ($this->request->getPost("filterOrder") == 'false') ? 'ASC' : 'DESC' ;
             $rows = Post::find([
                 "order" => $filterField.' '.$filterOrder,
                 "limit" => $limit,
@@ -95,7 +94,7 @@ class FormController extends  BaseController
         $limit = ($this->request->getPost("limit")) ? $this->request->getPost("limit") : 10 ;
 
         $filterField = ($this->request->getPost("filterField")) ? $this->request->getPost("filterField") : 'date' ;
-        $filterOrder = ($this->request->getPost("filterOrder")) ? $this->request->getPost("filterOrder") : 'DESC' ;
+        $filterOrder = ($this->request->getPost("filterOrder") == 'false') ? 'ASC' : 'DESC' ;
 
         $rows = Post::find([
             "order" => $filterField.' '.$filterOrder,

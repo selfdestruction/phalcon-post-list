@@ -20,7 +20,7 @@ class IndexController extends  BaseController
         $limit = ($this->request->getQuery("limit")) ? $this->request->getQuery("limit") : 10 ;
 
         $filterField = ($this->request->getQuery("filterField")) ? $this->request->getQuery("filterField") : 'date' ;
-        $filterOrder = ($this->request->getQuery("filterOrder")) ? $this->request->getQuery("filterOrder") : 'DESC' ;
+        $filterOrder = ($this->request->getQuery("filterOrder") == 'false') ? 'ASC' : 'DESC' ;
 
         $rows = Post::find([
             "order" => $filterField.' '.$filterOrder,
